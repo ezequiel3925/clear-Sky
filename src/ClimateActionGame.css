@@ -1,0 +1,124 @@
+/* Estilos para el componente ClimateActionGame */
+main {
+    padding: 2rem;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+  }
+  
+  h1 {
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Estilos para los componentes de UI */
+  .card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+  }
+  
+  .card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+  }
+  
+  .card-description {
+    color: #4a5568;
+    margin-top: 0.5rem;
+  }
+  
+  .card-content {
+    padding: 1.5rem;
+  }
+  
+  .card-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  
+  .button {
+    background-color: #4299e1;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+  }
+  
+  .button:hover {
+    background-color: #3182ce;
+  }
+  
+  /* Estilos para el gráfico */
+  .recharts-wrapper {
+    margin: 0 auto;
+  }
+  
+  /* Estilos para los tabs */
+  .tabs {
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 1rem;
+  }
+  
+  .tab {
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+  }
+  
+  .tab.active {
+    border-bottom-color: #4299e1;
+    color: #4299e1;
+  }
+  
+  /* Estilos para el diálogo */
+  .dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .dialog-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  /* Estilos para los inputs y labels */
+  .input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+  }
+  
+  .label {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
