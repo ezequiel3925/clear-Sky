@@ -155,6 +155,37 @@ main {
   align-items: center; /* Center horizontally */
   color: white; /* Text color */
   padding: 20px; /* Padding around content */
+  z-index: 1;
+}
+
+.battery-container {
+  display: flex;
+  flex-direction: column; /* Arrange cells vertically */
+  justify-content: flex-end; /* Align cells at the bottom */
+  width: 20%; /* Width of the battery container */
+  height: 80%; /* Height of the battery container */
+  position: absolute; /* Absolute positioning */
+  right: 5%; /* Position it towards the right */
+  z-index: 10; /* Z-index to ensure it appears above other elements */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for visibility */
+  border-radius: 10px; /* Rounded corners */
+  padding: 5px; /* Padding around the battery */
+}
+
+/* Individual Battery Cells */
+.battery-cell {
+  width: 100%; /* Full width of the battery container */
+  height: 8%; /* Height of each cell */
+  margin: 2% 0; /* Margin between cells */
+  background-color: red; /* Color for the cells */
+  border-radius: 4px; /* Rounded corners for cells */
+}
+
+/* Battery Label */
+.battery-label {
+  text-align: center; /* Center the label */
+  color: white; /* Label color */
+  margin-bottom: 5px; /* Space between label and cells */
 }
 
 /* Second Section (occupies 30% of the layout height) */
