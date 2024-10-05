@@ -251,7 +251,7 @@ export default function ClimateActionGame() {
     <>
       <h2>Instrucciones:</h2>
 
-      <p> Placeholder</p>
+      <p> En el juego virtual tu meta es reducir la peligrosidad del cambio climático tomando decisiones estratégicas. Cada carta que juegues influirá en la peligrosidad ambiental, la cual puede aumentar o disminuir dependiendo de las acciones que tomes. ¡Tu objetivo es mantener la peligrosidad baja y contribuir a un futuro más sostenible!</p>
 
       <Button className="button" onClick={() => setGameState('play')}>Comenzar 🚀</Button>
       {/*<div className="space-y-4">
