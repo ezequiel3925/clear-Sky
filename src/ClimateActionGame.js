@@ -472,7 +472,7 @@ export default function ClimateActionGame() {
             </div>
           </CardContent>
           <CardFooter className="card-footer">
-            <Button className="button" onClick={() => setGameState('instructions')}>Leer instrucciones 🚀</Button>
+            <Button className="button" onClick={() => setGameState('instructions')}>Leer instrucciones 📕</Button>
           </CardFooter>
         </Card>
       )}
