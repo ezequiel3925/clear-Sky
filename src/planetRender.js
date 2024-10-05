@@ -13,6 +13,9 @@ export function PlanetRender({ planetDamage }) {
       let bias = 0.55 + planetDamage;
       let cBias = 0.45 + planetDamage;
 
+      let stars = [];
+      let velocity = [10, 10];
+
       const drawPolo = (
         position,
         b,
@@ -98,6 +101,44 @@ export function PlanetRender({ planetDamage }) {
       p.setup = () => {
         p.createCanvas(400, 400).parent(ref.current);
         p.noiseSeed(123);
+
+        for (let i = 0; i < 100; i++) {
+          stars.push([
+            Math.random() * p.width,
+            Math.random() * p.height,
+            Math.random() * 2,
+          ]);
+        }
+      };
+
+      p.draw = () => {
+        p.background(0);
+
+        for (let i = 0; i < 100; i++) {
+          p.fill(255);
+          p.stroke(255);
+          p.circle(...stars[i]);
+          stars[i][0] += velocity[0] * (p.deltaTime / 1000);
+          stars[i][1] += velocity[1] * (p.deltaTime / 1000);
+
+          if (stars[i][0] > p.width) {
+            stars[i][0] -= p.width;
+            stars[i][1] = Math.random() * p.height;
+          }
+          if (stars[i][0] < 0) {
+            stars[i][0] += p.width;
+            stars[i][1] = Math.random() * p.height;
+          }
+
+          if (stars[i][1] > p.height) {
+            stars[i][1] -= p.height;
+            stars[i][0] = Math.random() * p.width;
+          }
+          if (stars[i][1] < 0) {
+            stars[i][1] += p.height;
+            stars[i][0] = Math.random() * p.width;
+          }
+        }
 
         drawPlanet();
       };
