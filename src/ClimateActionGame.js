@@ -239,6 +239,20 @@ export default function ClimateActionGame() {
     setIsPromptDialogOpen(true);
   };
 
+// Lógica del componente
+const [selectedCard, setSelectedCard] = useState(null);
+
+const openModal = (card) => {
+  setSelectedCard(card);
+};
+
+const closeModal = () => {
+  setSelectedCard(null);
+};
+
+
+
+  
   // Renderizar el juego principal
 
   const renderGame = () => {
@@ -265,19 +279,31 @@ export default function ClimateActionGame() {
 
         {/* Second Section (30% height) */}
         <div className="second-section">
-  {/* Content for the second section (e.g., card selection) */}
-  <div className="card">
-  <img src="/invertirEnAutosElectricos.jpeg" width={'50%'} alt="Card 1" className="card-image" />
-</div>
+    {/* Cada tarjeta es un botón */}
+    <div className="card" onClick={() => openModal("autos")}>
+      <img src="/invertirEnAutosElectricos.jpeg" alt="Card 1" />
+    </div>
 
-  <div className="card">
-    <img src="/InvertirEnMigracion.jpeg" width={'50%'} alt="Card 2" className="card-image" />
-  </div>
-  <div className="card">
-    <img src="/invertirEnNuclear.jpeg" width={'50%'} alt="Card 3" className="card-image" />
-  </div>
-</div>
+    <div className="card" onClick={() => openModal("migracion")}>
+      <img src="/InvertirEnMigracion.jpeg" alt="Card 2" />
+    </div>
 
+    <div className="card" onClick={() => openModal("nuclear")}>
+      <img src="/invertirEnNuclear.jpeg" alt="Card 3" />
+    </div>
+
+    {/* Modal simplificado */}
+    {selectedCard && (
+      <div className="modal" onClick={closeModal}>
+        <div className="modal-content">
+          <button className="close" onClick={closeModal}>X</button>
+          {selectedCard === "autos" && <p>Los autos eléctricos son el futuro.</p>}
+          {selectedCard === "migracion" && <p>La migración es una oportunidad.</p>}
+          {selectedCard === "nuclear" && <p>La energía nuclear es clave.</p>}
+        </div>
+      </div>
+    )}
+  </div>
       </div>
     );
   };
@@ -322,20 +348,46 @@ export default function ClimateActionGame() {
             options={chartOptions}
           />
         </CardContent>
-        
+        <CardFooter className="card-footer">
+          <Button className="button" onClick={() => handleAction('renewableEnergy')}>
+            Invertir en energía renovable
+          </Button>
+          <Button className="button" onClick={() => handleAction('reforestation')}>
+            Reforestar
+          </Button>
+          <Button className="button" onClick={() => handleAction('sustainableTransport')}>
+            Promover transporte sostenible
+          </Button>
+          <Button className="button" onClick={() => handleAction('industryEfficiency')}>
+            Mejorar eficiencia industrial
+          </Button>
+        </CardFooter>
       </Card>
       <Card className="card">
         <CardHeader className="card-header">
-          <CardTitle className="card-title">Acciones tomadas:</CardTitle>
+          <CardTitle className="card-title">Acciones tomadas</CardTitle>
         </CardHeader>
         <CardContent className="card-content space-y-2">
           <div>
-            
+            <div className="mb-2 text-sm font-medium">Energía renovable</div>
+            <Progress value={actions.renewableEnergy} className="h-2" />
+          </div>
+          <div>
+            <div className="mb-2 text-sm font-medium">Reforestación</div>
+            <Progress value={actions.reforestation} className="h-2" />
+          </div>
+          <div>
+            <div className="mb-2 text-sm font-medium">Transporte sostenible</div>
+            <Progress value={actions.sustainableTransport} className="h-2" />
+          </div>
+          <div>
+            <div className="mb-2 text-sm font-medium">Eficiencia industrial</div>
+            <Progress value={actions.industryEfficiency} className="h-2" />
           </div>
         </CardContent>
       </Card>
-      <Button className="button w-full" onClick={() => setGameState("play")}>
-        Volver al juego
+      <Button className="button w-full" onClick={generatePrompt}>
+        Generar pregunta para el chatbot de IA
       </Button>
       <Dialog open={isPromptDialogOpen} onOpenChange={setIsPromptDialogOpen}>
         <DialogContent className="dialog-content">
