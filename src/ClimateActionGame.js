@@ -207,57 +207,36 @@ export default function ClimateActionGame() {
 
   const renderGame = () => {
     return (
-      <div className="space-y-4">
-        {/* Visual Section */}
-        <div className="relative w-full h-64 bg-gray-800">
-          {/* Background Image */}
-          <img
-            src="your-image-url.jpg"
-            alt="Game Background"
-            className="absolute inset-0 w-full h-full object-cover opacity-70"
-          />
-  
-          {/* Planet Image */}
-          <img
-            src="/earth-11009_1280.jpg" 
-            alt="Planet"
-            className="absolute top-4 left-4 w-32 h-32 object-contain"
-          />
-  
-          {/* Text Overlay */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-            <h1 className="text-3xl font-bold">Your Game Title</h1>
-            <p className="text-lg mt-2">Some overlay description or instructions.</p>
-  
-            {/* Buttons */}
-            <div className="mt-4 space-x-2">
-              <button className="px-4 py-2 bg-blue-500 rounded">Action 1</button>
-              <button className="px-4 py-2 bg-green-500 rounded">Action 2</button>
-            </div>
-          </div>
+      <div className="game-layout">
+      {/* First Section (70% height) */}
+      <div className="first-section">
+        {/* Content for the first section (e.g., planet image, text, buttons) */}
+        
+        
+        
+      </div>
+
+      {/* Second Section (30% height) */}
+      <div className="second-section">
+        {/* Content for the second section (e.g., card selection) */}
+        <div className="card">
+          <h2>Card 1</h2>
+          <p>Description of Card 1.</p>
         </div>
-  
-        {/* Card Selection Section */}
-        <div className="grid grid-cols-3 gap-4 p-4 bg-gray-100">
-          {/* Example cards */}
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-xl font-bold">Card 1</h2>
-            <p>Description of the card.</p>
-          </div>
-  
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-xl font-bold">Card 2</h2>
-            <p>Description of the card.</p>
-          </div>
-  
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-xl font-bold">Card 3</h2>
-            <p>Description of the card.</p>
-          </div>
+        <div className="card">
+          <h2>Card 2</h2>
+          <p>Description of Card 2.</p>
+        </div>
+        <div className="card">
+          <h2>Card 3</h2>
+          <p>Description of Card 3.</p>
         </div>
       </div>
+    </div>
     );
-  }
+  };
+  
+  
 
   // Renderizar las instrucciones
   const renderInstructions = () => (
