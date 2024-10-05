@@ -212,8 +212,16 @@ export default function ClimateActionGame() {
       <div className="first-section">
         {/* Content for the first section (e.g., planet image, text, buttons) */}
         
-        
-        
+
+        {/* Battery Container */}
+        <div className="battery-container">
+          {/* Battery Label */}
+          <div className="battery-label">Peligrosidad</div>
+          {/* Render 10 battery cells */}
+          {[...Array(10)].map((_, index) => (
+            <div key={index} className="battery-cell"></div>
+          ))}
+        </div>
       </div>
 
       {/* Second Section (30% height) */}
