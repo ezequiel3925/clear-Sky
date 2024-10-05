@@ -145,7 +145,7 @@ main {
 /* First Section (occupies 70% of the layout height) */
 .first-section {
   flex: 7; /* 7/10 or 70% */
-  background-image: url('/public/earth-11009_1280.jpg'); /* Path to the planet image */
+  /*background-image: url('/public/earth-11009_1280.jpg');*/ 
   background-size: contain; /* Ensure the image fits within the section */
   background-repeat: no-repeat; /* Prevent repeating the image */
   background-position: center; /* Center the background image */
