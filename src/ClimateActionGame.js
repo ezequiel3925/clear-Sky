@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import AudioPlayer from "./components/AudioPlayer";
+import React, { useState, useEffect,useRef } from "react";
 import { Line } from "react-chartjs-2";
 import { Button } from "./ui/button";
 import {
@@ -45,6 +46,8 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+
 
 // Configuración del gráfico
 const chartOptions = {
@@ -113,6 +116,8 @@ const chartOptions = {
     },
   },
 };
+
+
 
 // Función para simular la obtención de datos históricos
 const fetchNASAData = async () => {
@@ -243,7 +248,10 @@ export default function ClimateActionGame() {
         <div className="first-section">
           {/* Content for the first section (e.g., planet image, text, buttons) */}
           <PlanetRender planetDamage={0} />
-
+          {/* graphic button */}
+          <div className="graphic-container">
+          <button onClick={() => setGameState("graphic")}>Revisar gráfico</button>
+          </div>
           {/* Battery Container */}
           <div className="battery-container">
             {/* Battery Label */}
@@ -275,17 +283,10 @@ export default function ClimateActionGame() {
     );
   };
 
-  // Renderizar las instrucciones
-  const renderInstructions = () => (
-    <>
-      <h2>Instrucciones:</h2>
-
-      <p> En el juego virtual tu meta es reducir la peligrosidad del cambio climático tomando decisiones estratégicas. Cada carta que juegues influirá en la peligrosidad ambiental, la cual puede aumentar o disminuir dependiendo de las acciones que tomes. ¡Tu objetivo es mantener la peligrosidad baja y contribuir a un futuro más sostenible!</p>
-
-      <Button className="button" onClick={() => setGameState("play")}>
-        Comenzar 🚀
-      </Button>
-      {/*<div className="space-y-4">
+  //renderizar el grafico
+  const renderGraphic = () => {
+    return(
+      <div className="space-y-4">
       <Card className="card">
         <CardHeader className="card-header">
           <CardTitle className="card-title">Año: {year} {currentEvent && `- ${currentEvent}`}</CardTitle>
@@ -395,7 +396,22 @@ export default function ClimateActionGame() {
           </CardFooter>
         </Card>
       )}
-    </div> */}
+    </div> 
+    );
+    
+  }
+
+  // Renderizar las instrucciones
+  const renderInstructions = () => (
+    <>
+      <h2>Instrucciones:</h2>
+
+      <p> En el juego virtual tu meta es reducir la peligrosidad del cambio climático tomando decisiones estratégicas. Cada carta que juegues influirá en la peligrosidad ambiental, la cual puede aumentar o disminuir dependiendo de las acciones que tomes. ¡Tu objetivo es mantener la peligrosidad baja y contribuir a un futuro más sostenible!</p>
+
+      <Button className="button" onClick={() => setGameState("play")}>
+        Comenzar 🚀
+      </Button>
+      
     </>
   );
 
@@ -537,10 +553,17 @@ export default function ClimateActionGame() {
   // Renderizado principal del componente
   return (
     <div className="container">
-      {
-        //<h1 className="text-3xl font-bold mb-4">ODS 13: Acción por el Clima 🌍</h1>//}
-        <h1 className="text-3xl font-bold mb-4">Clear Sky 🌍</h1>
-      }
+      
+        {/*<h1 className="text-3xl font-bold mb-4">ODS 13: Acción por el Clima 🌍</h1>*/}
+        <>
+      {/*<h1 className="text-3xl font-bold mb-4">ODS 13: Acción por el Clima 🌍</h1>*/}
+      <div className="flex-container-title">
+      <h1 className="heading">Clear Sky 🌍</h1>
+      <AudioPlayer />
+    </div>
+      
+    </>
+      
       {gameState === "start" && (
         <Card className="card">
           <CardHeader className="card-header">
@@ -619,6 +642,7 @@ export default function ClimateActionGame() {
       {gameState === "play" && renderGame()}
       {gameState === "quiz" && renderQuiz()}
       {gameState === "end" && renderEnd()}
+      {gameState === "graphic" && renderGraphic()}
     </div>
   );
 }

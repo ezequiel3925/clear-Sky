@@ -158,6 +158,34 @@ main {
   z-index: 1;
 }
 
+.flex-container-title {
+  display: flex; /* Use flexbox layout */
+  justify-content: center;
+  align-items: center; /* Align items vertically centered */
+  margin-bottom: 1rem; /* Space below the container */
+}
+
+.heading {
+  font-size: 2rem; /* Set font size */
+  font-weight: bold; /* Make the text bold */
+  margin-right: 1rem; /* Add space to the right of the heading */
+}
+
+.graphic-container{
+  display: flex;
+  flex-direction: column; /* Arrange cells vertically */
+  justify-content: flex-end; /* Align cells at the bottom */
+  width: 20%; /* Width of the battery container */
+  height: 80%; /* Height of the battery container */
+  position: absolute; /* Absolute positioning */
+  left: 10%; /* Position it towards the right */
+  bottom: 55%;
+  z-index: 10; /* Z-index to ensure it appears above other elements */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for visibility */
+  border-radius: 10px; /* Rounded corners */
+  padding: 5px; /* Padding around the battery */
+}
+
 .battery-container {
   display: flex;
   flex-direction: column; /* Arrange cells vertically */
