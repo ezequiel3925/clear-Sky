@@ -239,6 +239,20 @@ export default function ClimateActionGame() {
     setIsPromptDialogOpen(true);
   };
 
+// Lógica del componente
+const [selectedCard, setSelectedCard] = useState(null);
+
+const openModal = (card) => {
+  setSelectedCard(card);
+};
+
+const closeModal = () => {
+  setSelectedCard(null);
+};
+
+
+
+  
   // Renderizar el juego principal
 
   const renderGame = () => {
@@ -265,20 +279,31 @@ export default function ClimateActionGame() {
 
         {/* Second Section (30% height) */}
         <div className="second-section">
-          {/* Content for the second section (e.g., card selection) */}
-          <div className="card">
-            <h2>Card 1</h2>
-            <p>Description of Card 1.</p>
-          </div>
-          <div className="card">
-            <h2>Card 2</h2>
-            <p>Description of Card 2.</p>
-          </div>
-          <div className="card">
-            <h2>Card 3</h2>
-            <p>Description of Card 3.</p>
-          </div>
+    {/* Cada tarjeta es un botón */}
+    <div className="card" onClick={() => openModal("autos")}>
+      <img src="/invertirEnAutosElectricos.jpeg" alt="Card 1" />
+    </div>
+
+    <div className="card" onClick={() => openModal("migracion")}>
+      <img src="/InvertirEnMigracion.jpeg" alt="Card 2" />
+    </div>
+
+    <div className="card" onClick={() => openModal("nuclear")}>
+      <img src="/invertirEnNuclear.jpeg" alt="Card 3" />
+    </div>
+
+    {/* Modal simplificado */}
+    {selectedCard && (
+      <div className="modal" onClick={closeModal}>
+        <div className="modal-content">
+          <button className="close" onClick={closeModal}>X</button>
+          {selectedCard === "autos" && <p>Los autos eléctricos son el futuro.</p>}
+          {selectedCard === "migracion" && <p>La migración es una oportunidad.</p>}
+          {selectedCard === "nuclear" && <p>La energía nuclear es clave.</p>}
         </div>
+      </div>
+    )}
+  </div>
       </div>
     );
   };
