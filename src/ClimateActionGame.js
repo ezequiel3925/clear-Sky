@@ -204,8 +204,49 @@ export default function ClimateActionGame() {
   };
 
   // Renderizar el juego principal
-  const renderGame = () => (
-    <div className="space-y-4">
+
+  const renderGame = () => {
+    return (
+      <div className="game-layout">
+      {/* First Section (70% height) */}
+      <div className="first-section">
+        {/* Content for the first section (e.g., planet image, text, buttons) */}
+        
+        
+        
+      </div>
+
+      {/* Second Section (30% height) */}
+      <div className="second-section">
+        {/* Content for the second section (e.g., card selection) */}
+        <div className="card">
+          <h2>Card 1</h2>
+          <p>Description of Card 1.</p>
+        </div>
+        <div className="card">
+          <h2>Card 2</h2>
+          <p>Description of Card 2.</p>
+        </div>
+        <div className="card">
+          <h2>Card 3</h2>
+          <p>Description of Card 3.</p>
+        </div>
+      </div>
+    </div>
+    );
+  };
+  
+  
+
+  // Renderizar las instrucciones
+  const renderInstructions = () => (
+    <>
+      <h2>Instrucciones:</h2>
+
+      <p> Placeholder</p>
+
+      <Button className="button" onClick={() => setGameState('play')}>Comenzar 🚀</Button>
+      {/*<div className="space-y-4">
       <Card className="card">
         <CardHeader className="card-header">
           <CardTitle className="card-title">Año: {year} {currentEvent && `- ${currentEvent}`}</CardTitle>
@@ -315,7 +356,9 @@ export default function ClimateActionGame() {
           </CardFooter>
         </Card>
       )}
-    </div>
+    </div> */}
+    </>
+
   );
 
   // Renderizar el cuestionario
@@ -417,13 +460,14 @@ export default function ClimateActionGame() {
       </div>
     </div>
 
-    
+
   );
 
   // Renderizado principal del componente
   return (
     <div className="container">
-      <h1 className="text-3xl font-bold mb-4">ODS 13: Acción por el Clima 🌍</h1>
+      {//<h1 className="text-3xl font-bold mb-4">ODS 13: Acción por el Clima 🌍</h1>//}
+        <h1 className="text-3xl font-bold mb-4">Clear Sky 🌍</h1>}
       {gameState === 'start' && (
         <Card className="card">
           <CardHeader className="card-header">
@@ -456,10 +500,11 @@ export default function ClimateActionGame() {
             </div>
           </CardContent>
           <CardFooter className="card-footer">
-            <Button className="button" onClick={() => setGameState('play')}>Comenzar 🚀</Button>
+            <Button className="button" onClick={() => setGameState('instructions')}>Leer instrucciones 📕</Button>
           </CardFooter>
         </Card>
       )}
+      {gameState === 'instructions' && renderInstructions()}
       {gameState === 'play' && renderGame()}
       {gameState === 'quiz' && renderQuiz()}
       {gameState === 'end' && renderEnd()}
