@@ -1,7 +1,7 @@
 "use client";
 
 import AudioPlayer from "./components/AudioPlayer";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Line } from "react-chartjs-2";
 import { Button } from "./ui/button";
 import {
@@ -35,6 +35,8 @@ import {
   Legend,
 } from "chart.js";
 import { PlanetRender } from "./planetRender";
+
+
 
 // Registramos los componentes necesarios de Chart.js
 ChartJS.register(
@@ -239,38 +241,45 @@ export default function ClimateActionGame() {
     setIsPromptDialogOpen(true);
   };
 
-// Lógica del componente
-const [selectedCard, setSelectedCard] = useState(null);
+  // Lógica del componente
+  const [selectedCard, setSelectedCard] = useState(null);
 
-const openModal = (card) => {
-  setSelectedCard(card);
-};
+  const openModal = (card) => {
+    setSelectedCard(card);
+  };
 
-const closeModal = () => {
-  setSelectedCard(null);
-};
+  const closeModal = () => {
+    setSelectedCard(null);
+  };
 
 
 
-  
+
   // Renderizar el juego principal
 
   const renderGame = () => {
+    const cardData = [
+      { id: "autos", src: "/invertirEnAutosElectricos.jpeg", text: "El futuro es eléctrico, invierte hoy en autos que están transformando el mundo hacia un mañana más limpio.", co2Impact: "+8" },
+      { id: "migracion", src: "/InvertirEnMigracion.jpeg", text: "La migración masiva es una oportunidad para la innovación y el crecimiento cultural.", co2Impact: "0" },
+      { id: "nuclear", src: "/invertirEnNuclear.jpeg", text: "La energía nuclear es la clave para un planeta sostenible y una fuente de energía limpia a largo plazo.", co2Impact: "+9" },
+      { id: "basural", src: "/invertirEnBasural.jpeg", text: "Transforma los residuos en recursos, invierte en soluciones para la gestión eficiente de basurales.", co2Impact: "+5" },
+      { id: "eolica", src: "/invertirEnEolica.jpeg", text: "El viento es la energía del futuro, invierte en energía eólica para impulsar un planeta más verde.", co2Impact: "+10" },
+      { id: "transgenica", src: "/invertirEnTransgenico.jpeg", text: "Los cultivos transgénicos son la solución para una agricultura más eficiente y sostenible.", co2Impact: "+6" },
+      { id: "agricultura", src: "/invertirEnAgricultura.jpeg", text: "Invierte en agricultura inteligente y sostenible para alimentar al mundo de manera responsable.", co2Impact: "+7" },
+      { id: "reforestar", src: "/invertirEnReforestar.jpeg", text: "Reforestar es restaurar el equilibrio natural, invierte en proyectos que dan vida al planeta.", co2Impact: "+10" },
+    ];
+
+
     return (
       <div className="game-layout">
         {/* First Section (70% height) */}
         <div className="first-section">
-          {/* Content for the first section (e.g., planet image, text, buttons) */}
           <PlanetRender planetDamage={0} />
-          {/* graphic button */}
-          <div className="graphic-container">
-          <button onClick={() => setGameState("graphic")}>Revisar gráfico</button>
-          </div>
-          {/* Battery Container */}
+
+
+
           <div className="battery-container">
-            {/* Battery Label */}
             <div className="battery-label">Peligrosidad</div>
-            {/* Render 10 battery cells */}
             {[...Array(10)].map((_, index) => (
               <div key={index} className="battery-cell"></div>
             ))}
@@ -279,151 +288,152 @@ const closeModal = () => {
 
         {/* Second Section (30% height) */}
         <div className="second-section">
-    {/* Cada tarjeta es un botón */}
-    <div className="card" onClick={() => openModal("autos")}>
-      <img src="/invertirEnAutosElectricos.jpeg" alt="Card 1" />
-    </div>
+          {cardData.map((card) => (
+            <div key={card.id} className="card responsive-card" onClick={() => openModal(card.id)}>
+              <img src={card.src} alt={`Card ${card.id}`} className="card-image" />
 
-    <div className="card" onClick={() => openModal("migracion")}>
-      <img src="/InvertirEnMigracion.jpeg" alt="Card 2" />
-    </div>
+            </div>
+          ))}
 
-    <div className="card" onClick={() => openModal("nuclear")}>
-      <img src="/invertirEnNuclear.jpeg" alt="Card 3" />
-    </div>
-
-    {/* Modal simplificado */}
-    {selectedCard && (
-      <div className="modal" onClick={closeModal}>
-        <div className="modal-content">
-          <button className="close" onClick={closeModal}>X</button>
-          {selectedCard === "autos" && <p>Los autos eléctricos son el futuro.</p>}
-          {selectedCard === "migracion" && <p>La migración es una oportunidad.</p>}
-          {selectedCard === "nuclear" && <p>La energía nuclear es clave.</p>}
+          
         </div>
-      </div>
-    )}
-  </div>
+        {selectedCard && (
+            <div onClick={closeModal}>
+              <div className="modal-content" >
+                <button className="close" onClick={closeModal}>X</button>
+                <p>{cardData.find(card => card.id === selectedCard)?.text}</p>
+                <p>CO2 Impact: {cardData.find(card => card.id === selectedCard)?.co2Impact}</p>
+
+              </div>
+            </div>
+          )}
+        {/* Compact Button */}
+        <div >
+          <button onClick={() => setGameState("graphic")} className="compact-button">
+            Revisar gráfico
+          </button>
+        </div>
       </div>
     );
   };
 
+
   //renderizar el grafico
   const renderGraphic = () => {
-    return(
+    return (
       <div className="space-y-4">
-      <Card className="card">
-        <CardHeader className="card-header">
-          <CardTitle className="card-title">Año: {year} {currentEvent && `- ${currentEvent}`}</CardTitle>
-          <CardDescription className="card-description">
-            Temperatura: {temperature.toFixed(2)}°C por encima de la línea base
-          </CardDescription>
-          <CardDescription className="card-description">
-            CO2: {Math.round(co2)} ppm
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="card-content">
-          <Line
-            data={{
-              labels: gameData.map(data => data.year),
-              datasets: [
-                {
-                  label: 'Temperatura (°C)',
-                  data: gameData.map(data => data.temperature),
-                  borderColor: '#ff7300',
-                  backgroundColor: 'rgba(255, 115, 0, 0.2)',
-                  yAxisID: 'y',
-                  tension: 0.4,
-                },
-                {
-                  label: 'CO2 (ppm)',
-                  data: gameData.map(data => data.co2),
-                  borderColor: '#82ca9d',
-                  backgroundColor: 'rgba(130, 202, 157, 0.2)',
-                  yAxisID: 'y1',
-                  tension: 0.4,
-                },
-              ],
-            }}
-            options={chartOptions}
-          />
-        </CardContent>
-        <CardFooter className="card-footer">
-          <Button className="button" onClick={() => handleAction('renewableEnergy')}>
-            Invertir en energía renovable
-          </Button>
-          <Button className="button" onClick={() => handleAction('reforestation')}>
-            Reforestar
-          </Button>
-          <Button className="button" onClick={() => handleAction('sustainableTransport')}>
-            Promover transporte sostenible
-          </Button>
-          <Button className="button" onClick={() => handleAction('industryEfficiency')}>
-            Mejorar eficiencia industrial
-          </Button>
-        </CardFooter>
-      </Card>
-      <Card className="card">
-        <CardHeader className="card-header">
-          <CardTitle className="card-title">Acciones tomadas</CardTitle>
-        </CardHeader>
-        <CardContent className="card-content space-y-2">
-          <div>
-            <div className="mb-2 text-sm font-medium">Energía renovable</div>
-            <Progress value={actions.renewableEnergy} className="h-2" />
-          </div>
-          <div>
-            <div className="mb-2 text-sm font-medium">Reforestación</div>
-            <Progress value={actions.reforestation} className="h-2" />
-          </div>
-          <div>
-            <div className="mb-2 text-sm font-medium">Transporte sostenible</div>
-            <Progress value={actions.sustainableTransport} className="h-2" />
-          </div>
-          <div>
-            <div className="mb-2 text-sm font-medium">Eficiencia industrial</div>
-            <Progress value={actions.industryEfficiency} className="h-2" />
-          </div>
-        </CardContent>
-      </Card>
-      <Button className="button w-full" onClick={generatePrompt}>
-        Generar pregunta para el chatbot de IA
-      </Button>
-      <Dialog open={isPromptDialogOpen} onOpenChange={setIsPromptDialogOpen}>
-        <DialogContent className="dialog-content">
-          <DialogHeader>
-            <DialogTitle className="dialog-title">Pregunta generada para el chatbot de IA</DialogTitle>
-            <DialogDescription className="dialog-description">
-              Copia esta pregunta y pégala en tu chatbot de IA favorito para aprender más sobre el cambio climático.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="mt-4">
-            <Label htmlFor="prompt" className="label">Pregunta generada:</Label>
-            <Input id="prompt" value={generatedPrompt} readOnly className="input mt-2" />
-          </div>
-          <Button className="button mt-4" onClick={() => setIsPromptDialogOpen(false)}>Cerrar</Button>
-        </DialogContent>
-      </Dialog>
-      {year >= 2030 && (
         <Card className="card">
           <CardHeader className="card-header">
-            <CardTitle className="card-title">¡Juego terminado! 🎉</CardTitle>
-            <CardDescription className="card-description">Tu puntuación: {score}</CardDescription>
+            <CardTitle className="card-title">Año: {year} {currentEvent && `- ${currentEvent}`}</CardTitle>
+            <CardDescription className="card-description">
+              Temperatura: {temperature.toFixed(2)}°C por encima de la línea base
+            </CardDescription>
+            <CardDescription className="card-description">
+              CO2: {Math.round(co2)} ppm
+            </CardDescription>
           </CardHeader>
           <CardContent className="card-content">
-            {score > 50 ?
-              "¡Excelente trabajo! 🌟 Has hecho una diferencia significativa en la lucha contra el cambio climático." :
-              "Buen intento, pero aún hay mucho por hacer para combatir el cambio climático. ¡Inténtalo de nuevo! 💪"
-            }
+            <Line
+              data={{
+                labels: gameData.map(data => data.year),
+                datasets: [
+                  {
+                    label: 'Temperatura (°C)',
+                    data: gameData.map(data => data.temperature),
+                    borderColor: '#ff7300',
+                    backgroundColor: 'rgba(255, 115, 0, 0.2)',
+                    yAxisID: 'y',
+                    tension: 0.4,
+                  },
+                  {
+                    label: 'CO2 (ppm)',
+                    data: gameData.map(data => data.co2),
+                    borderColor: '#82ca9d',
+                    backgroundColor: 'rgba(130, 202, 157, 0.2)',
+                    yAxisID: 'y1',
+                    tension: 0.4,
+                  },
+                ],
+              }}
+              options={chartOptions}
+            />
           </CardContent>
           <CardFooter className="card-footer">
-            <Button className="button" onClick={() => setGameState('quiz')}>Realizar cuestionario 📝</Button>
+            <Button className="button" onClick={() => handleAction('renewableEnergy')}>
+              Invertir en energía renovable
+            </Button>
+            <Button className="button" onClick={() => handleAction('reforestation')}>
+              Reforestar
+            </Button>
+            <Button className="button" onClick={() => handleAction('sustainableTransport')}>
+              Promover transporte sostenible
+            </Button>
+            <Button className="button" onClick={() => handleAction('industryEfficiency')}>
+              Mejorar eficiencia industrial
+            </Button>
           </CardFooter>
         </Card>
-      )}
-    </div> 
+        <Card className="card">
+          <CardHeader className="card-header">
+            <CardTitle className="card-title">Acciones tomadas</CardTitle>
+          </CardHeader>
+          <CardContent className="card-content space-y-2">
+            <div>
+              <div className="mb-2 text-sm font-medium">Energía renovable</div>
+              <Progress value={actions.renewableEnergy} className="h-2" />
+            </div>
+            <div>
+              <div className="mb-2 text-sm font-medium">Reforestación</div>
+              <Progress value={actions.reforestation} className="h-2" />
+            </div>
+            <div>
+              <div className="mb-2 text-sm font-medium">Transporte sostenible</div>
+              <Progress value={actions.sustainableTransport} className="h-2" />
+            </div>
+            <div>
+              <div className="mb-2 text-sm font-medium">Eficiencia industrial</div>
+              <Progress value={actions.industryEfficiency} className="h-2" />
+            </div>
+          </CardContent>
+        </Card>
+        <Button className="button w-full" onClick={generatePrompt}>
+          Generar pregunta para el chatbot de IA
+        </Button>
+        <Dialog open={isPromptDialogOpen} onOpenChange={setIsPromptDialogOpen}>
+          <DialogContent className="dialog-content">
+            <DialogHeader>
+              <DialogTitle className="dialog-title">Pregunta generada para el chatbot de IA</DialogTitle>
+              <DialogDescription className="dialog-description">
+                Copia esta pregunta y pégala en tu chatbot de IA favorito para aprender más sobre el cambio climático.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="mt-4">
+              <Label htmlFor="prompt" className="label">Pregunta generada:</Label>
+              <Input id="prompt" value={generatedPrompt} readOnly className="input mt-2" />
+            </div>
+            <Button className="button mt-4" onClick={() => setIsPromptDialogOpen(false)}>Cerrar</Button>
+          </DialogContent>
+        </Dialog>
+        {year >= 2030 && (
+          <Card className="card">
+            <CardHeader className="card-header">
+              <CardTitle className="card-title">¡Juego terminado! 🎉</CardTitle>
+              <CardDescription className="card-description">Tu puntuación: {score}</CardDescription>
+            </CardHeader>
+            <CardContent className="card-content">
+              {score > 50 ?
+                "¡Excelente trabajo! 🌟 Has hecho una diferencia significativa en la lucha contra el cambio climático." :
+                "Buen intento, pero aún hay mucho por hacer para combatir el cambio climático. ¡Inténtalo de nuevo! 💪"
+              }
+            </CardContent>
+            <CardFooter className="card-footer">
+              <Button className="button" onClick={() => setGameState('quiz')}>Realizar cuestionario 📝</Button>
+            </CardFooter>
+          </Card>
+        )}
+      </div>
     );
-    
+
   }
 
   // Renderizar las instrucciones
@@ -436,7 +446,7 @@ const closeModal = () => {
       <Button className="button" onClick={() => setGameState("play")}>
         Comenzar 🚀
       </Button>
-      
+
     </>
   );
 
@@ -578,17 +588,17 @@ const closeModal = () => {
   // Renderizado principal del componente
   return (
     <div className="container">
-      
-        {/*<h1 className="text-3xl font-bold mb-4">ODS 13: Acción por el Clima 🌍</h1>*/}
-        <>
+
       {/*<h1 className="text-3xl font-bold mb-4">ODS 13: Acción por el Clima 🌍</h1>*/}
-      <div className="flex-container-title">
-      <h1 className="heading">Clear Sky 🌍</h1>
-      <AudioPlayer />
-    </div>
-      
-    </>
-      
+      <>
+        {/*<h1 className="text-3xl font-bold mb-4">ODS 13: Acción por el Clima 🌍</h1>*/}
+        <div className="flex-container-title">
+          <h1 className="heading">Clear Sky 🌍</h1>
+          <AudioPlayer />
+        </div>
+
+      </>
+
       {gameState === "start" && (
         <Card className="card">
           <CardHeader className="card-header">

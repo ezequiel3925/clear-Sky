@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-
+import "../ClimateActionGame.css";
 const AudioPlayer = () => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);

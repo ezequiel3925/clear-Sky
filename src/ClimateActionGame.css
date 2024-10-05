@@ -171,20 +171,40 @@ main {
   margin-right: 1rem; /* Add space to the right of the heading */
 }
 
-.graphic-container{
+
+.graphic-container {
   display: flex;
-  flex-direction: column; /* Arrange cells vertically */
-  justify-content: flex-end; /* Align cells at the bottom */
-  width: 20%; /* Width of the battery container */
-  height: 80%; /* Height of the battery container */
-  position: absolute; /* Absolute positioning */
-  left: 10%; /* Position it towards the right */
+  justify-content: flex-end;
+  width: 20%;
+  height: 80%;
+  position: absolute;
+  left: 10%;
   bottom: 55%;
-  z-index: 10; /* Z-index to ensure it appears above other elements */
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for visibility */
-  border-radius: 10px; /* Rounded corners */
-  padding: 5px; /* Padding around the battery */
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 5px;
 }
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .graphic-container {
+    width: 30%;
+    height: 60%;
+    left: 5%;
+    bottom: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .graphic-container {
+    width: 40%;
+    height: 50%;
+    left: 2%;
+    bottom: 45%;
+  }
+}
+
 
 .battery-container {
   display: flex;
@@ -224,36 +244,25 @@ main {
   justify-content: space-around; /* Space cards evenly */
   align-items: center; /* Center cards vertically */
   padding: 20px; /* Padding around content */
+  margin-top: 20px;
 }
 
-/* Card styles */
-.card {
-  background-color: #333; /* Card background color */
-  color: white; /* Card text color */
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-}
+
 
   
   /* Second Section (occupies 30% of the layout height) */
   .second-section {
     flex: 3; /* 3/10 or 30% */
-    background-color: #888; /* Add a background color to visualize the section */
+    background-color: #000000; /* Add a background color to visualize the section */
     display: flex;
     justify-content: space-around; /* Space cards evenly */
     align-items: center; /* Center cards vertically */
     padding: 20px; /* Padding around content */
+    margin-top: 20px;
   }
   
   /* Card styles */
-  .card {
-    background-color: #333; /* Card background color */
-    color: white; /* Card text color */
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-  }
+
 
   .battery-container {
     display: flex;
@@ -332,4 +341,139 @@ main {
     cursor: pointer;
     float: right;
   }
-  
+  /* General Layout */
+.game-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.first-section {
+  flex: 0 0 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.second-section {
+  flex: 0 0 30%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+}
+
+/* Cards Styling */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+  margin-top: 30px;
+  transition: transform 0.3s ease;
+  width: 250px;
+}
+
+.card:hover {
+  transform: scale(2.5);
+}
+
+.responsive-card {
+  width: 250px;
+  margin: 0 10px;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.card-text {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Compact Button */
+.compact-button {
+  padding: 6px 12px;
+  font-size: 12px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 120px; /* Compact size */
+  text-align: center;
+}
+
+.compact-button:hover {
+  background-color: #0056b3;
+}
+
+.battery-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.battery-cell {
+  width: 20px;
+  height: 40px;
+  background-color: green;
+  margin-right: 2px;
+}
+
+.battery-label {
+  font-size: 12px;
+  color: #333;
+  margin-right: 10px;
+}
+
+/* Diseño Responsivo */
+@media (max-width: 768px) {
+  .responsive-card {
+    width: 100px;
+    margin: 0 5px;
+  }
+
+  .card-text {
+    font-size: 12px;
+  }
+
+  .first-section {
+    flex: 0 0 60%;
+  }
+
+  .second-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .compact-button {
+    width: 100px;
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-card {
+    width: 80px;
+  }
+
+  .card-text {
+    font-size: 10px;
+  }
+
+  .compact-button {
+    width: 90px;
+    padding: 4px 8px;
+  }
+}
