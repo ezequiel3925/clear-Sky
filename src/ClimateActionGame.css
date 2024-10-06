@@ -386,6 +386,7 @@ main {
 .responsive-card {
   width: 250px;
   margin: 0 10px;
+  z-index: 1500;
 }
 
 .card-image {
