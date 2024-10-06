@@ -249,6 +249,8 @@ export default function ClimateActionGame() {
     setSelectedCard(null);
   };
 
+  const [dangerLevel, setDangerLevel] = useState(5);
+
   // Renderizar el juego principal
 
   const renderGame = () => {
@@ -257,51 +259,77 @@ export default function ClimateActionGame() {
         id: "autos",
         src: "/invertirEnAutosElectricos.jpeg",
         text: "El futuro es eléctrico, invierte hoy en autos que están transformando el mundo hacia un mañana más limpio.",
-        co2Impact: "+8",
+        co2Impact: -3,
       },
       {
         id: "migracion",
         src: "/InvertirEnMigracion.jpeg",
         text: "La migración masiva es una oportunidad para la innovación y el crecimiento cultural.",
-        co2Impact: "0",
+        co2Impact: -4,
       },
       {
         id: "nuclear",
         src: "/invertirEnNuclear.jpeg",
         text: "La energía nuclear es la clave para un planeta sostenible y una fuente de energía limpia a largo plazo.",
-        co2Impact: "+9",
+        co2Impact: +5,
       },
       {
         id: "basural",
         src: "/invertirEnBasural.jpeg",
         text: "Transforma los residuos en recursos, invierte en soluciones para la gestión eficiente de basurales.",
-        co2Impact: "+5",
+        co2Impact: +2,
       },
       {
         id: "eolica",
         src: "/invertirEnEolica.jpeg",
         text: "El viento es la energía del futuro, invierte en energía eólica para impulsar un planeta más verde.",
-        co2Impact: "+10",
+        co2Impact: +2,
       },
       {
         id: "transgenica",
         src: "/invertirEnTransgenico.jpeg",
         text: "Los cultivos transgénicos son la solución para una agricultura más eficiente y sostenible.",
-        co2Impact: "+6",
+        co2Impact: +2,
       },
       {
         id: "agricultura",
         src: "/invertirEnAgricultura.jpeg",
         text: "Invierte en agricultura inteligente y sostenible para alimentar al mundo de manera responsable.",
-        co2Impact: "+7",
+        co2Impact: +3,
       },
       {
         id: "reforestar",
         src: "/invertirEnReforestar.jpeg",
         text: "Reforestar es restaurar el equilibrio natural, invierte en proyectos que dan vida al planeta.",
-        co2Impact: "+10",
+        co2Impact: -3,
       },
     ];
+
+    const calculateDanger = (selectedCard) => {
+      const card = cardData.find((card) => card.id === selectedCard);
+
+      if (card) {
+        console.log(card.co2Impact);
+        if (card.co2Impact < 0) {
+          if (dangerLevel - card.co2Impact > 10) {
+            setDangerLevel(10);
+          } else {
+            setDangerLevel(dangerLevel - card.co2Impact);
+          }
+          setYear(year + 10);
+        } else if (card.co2Impact > 0) {
+          if (dangerLevel - card.co2Impact < 1) {
+            setDangerLevel(1);
+          } else {
+            setDangerLevel(dangerLevel - card.co2Impact);
+          }
+
+          setYear(year + 10);
+        }
+      } else {
+        console.log("Card not found");
+      }
+    };
 
     return (
       <div className="game-layout">
@@ -318,20 +346,22 @@ export default function ClimateActionGame() {
             <div onClick={closeModal}>
               <div className="modal-content">
                 <button
-                  onClick={() => console.log("test")}
+                  onClick={() => calculateDanger(selectedCard)}
                   className="button-confirm"
                 >
-                  {" "}
                   Confirmar Elección
                 </button>
                 <button className="close" onClick={closeModal}>
                   X
                 </button>
-                <p>{cardData.find((card) => card.id === selectedCard)?.text}</p>
-                <p>
-                  CO2 Impact:{" "}
-                  {cardData.find((card) => card.id === selectedCard)?.co2Impact}
-                </p>
+                <img
+                  width={125}
+                  height={125}
+                  src={cardData.find((card) => card.id === selectedCard)?.src}
+                  alt="Selected card"
+                />
+
+                <p>{cardData.find((card) => card.id === selectedCard).text}</p>
               </div>
             </div>
           )}
@@ -342,9 +372,20 @@ export default function ClimateActionGame() {
           </button>
           <div className="battery-container">
             <div className="battery-label">Peligrosidad</div>
-            {[...Array(10)].map((_, index) => (
-              <div key={index} className="battery-cell"></div>
-            ))}
+            {[...Array(dangerLevel)].map((_, index) => {
+              let cellClass = "battery-cell";
+
+              // Apply the color based on the index starting from the top
+              if (index < 3) {
+                cellClass += " low-danger"; // First 3 cells - Green
+              } else if (index < 7) {
+                cellClass += " moderate-danger"; // 4th to 7th cells - Yellow
+              } else {
+                cellClass += " high-danger"; // 8th and beyond - Red
+              }
+
+              return <div key={index} className={cellClass}></div>;
+            })}
           </div>
         </div>
 

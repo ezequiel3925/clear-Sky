@@ -53,7 +53,7 @@ main {
   .button-confirm {
     background-color: #4299e1;
     color: white;
-    
+    margin-bottom: 10px;
     font-weight: 600;
     transition: background-color 0.2s;
   }
@@ -239,9 +239,12 @@ main {
 
 /* Battery Label */
 .battery-label {
+  position: absolute;
+  
+  top: -3%;
   text-align: center; /* Center the label */
   color: white; /* Label color */
-  margin-bottom: 5px; /* Space between label and cells */
+   /* Space between label and cells */
 }
 
 /* Second Section (occupies 30% of the layout height) */
@@ -274,7 +277,7 @@ main {
 
   .battery-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
     width: 100px;
     margin: 20px auto;
@@ -283,7 +286,7 @@ main {
   .battery-label {
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     text-align: center;
   }
   
@@ -296,17 +299,16 @@ main {
     transition: background-color 0.3s ease;
   }
   
-  /* Representar los niveles de peligrosidad con colores */
-  .battery-cell:nth-child(-n+3) {
-    background-color: #4caf50; /* Verde - bajo peligro */
+  .battery-cell.low-danger {
+    background-color: #4caf50; /* Green - low danger */
   }
   
-  .battery-cell:nth-child(n+4):nth-child(-n+7) {
-    background-color: #ffeb3b; /* Amarillo - peligro moderado */
+  .battery-cell.moderate-danger {
+    background-color: #ffeb3b; /* Yellow - moderate danger */
   }
   
-  .battery-cell:nth-child(n+8) {
-    background-color: #f44336; /* Rojo - peligro alto */
+  .battery-cell.high-danger {
+    background-color: #f44336; /* Red - high danger */
   }
   
   /* Hover effect */
@@ -359,6 +361,7 @@ main {
     border: none;
     cursor: pointer;
     float: right;
+    margin-bottom: 50px;
   }
   /* General Layout */
 .game-layout {
