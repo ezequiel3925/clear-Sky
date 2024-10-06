@@ -53,7 +53,7 @@ main {
   .button-confirm {
     background-color: #4299e1;
     color: white;
-    
+    margin-bottom: 10px;
     font-weight: 600;
     transition: background-color 0.2s;
   }
@@ -361,6 +361,7 @@ main {
     border: none;
     cursor: pointer;
     float: right;
+    margin-bottom: 50px;
   }
   /* General Layout */
 .game-layout {

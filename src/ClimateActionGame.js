@@ -322,8 +322,10 @@ export default function ClimateActionGame() {
              <div className="modal-content" >
   <button onClick={() => calculateDanger(selectedCard)} className="button-confirm">Confirmar Elección</button>
   <button className="close" onClick={closeModal}>X</button>
-  <p>{selectedCard?.text}</p>
-  <p>CO2 Impact: {selectedCard?.co2Impact}</p>
+  <img width={125} height={125} src={cardData.find(card => card.id === selectedCard)?.src} alt="Selected card" />
+
+  <p>{cardData.find(card => card.id === selectedCard).text}</p>
+  
 </div>
 
             </div>
