@@ -274,8 +274,11 @@ export default function ClimateActionGame() {
       <div className="game-layout">
         {/* First Section (70% height) */}
         <div className="first-section">
+        <button onClick={() => setGameState("graphic")} className="compact-button">
+            Revisar gráfico
+          </button>
           <PlanetRender planetDamage={0} />
-
+          
 
 
           <div className="battery-container">
@@ -308,11 +311,9 @@ export default function ClimateActionGame() {
             </div>
           )}
         {/* Compact Button */}
-        <div >
-          <button onClick={() => setGameState("graphic")} className="compact-button">
-            Revisar gráfico
-          </button>
-        </div>
+        
+          
+        
       </div>
     );
   };
