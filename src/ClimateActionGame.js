@@ -253,6 +253,7 @@ export default function ClimateActionGame() {
   const [dangerLevel, setDangerLevel] = useState(5);
   const [imgs, setImgs] = useState([]);
   const [hideSecondSection, setHideSecondSection] = useState(false);
+  const [ind, setInd] = useState(0);
 
   useEffect(() => {
     let timer;
@@ -289,6 +290,45 @@ export default function ClimateActionGame() {
       <div>
         <h2>Result</h2>
         <p>{resultMessage}</p>
+
+        <div className="c-end">
+          <div className="controls">
+            <button
+              onClick={() => {
+                setInd((i) => {
+                  if (i === 0) {
+                    return imgs.length - 1;
+                  }
+                  return i - 1;
+                });
+              }}
+            >
+              {"<"}
+            </button>
+            <button
+              onClick={() => {
+                setInd((i) => {
+                  if (i === imgs.length - 1) {
+                    return 0;
+                  }
+                  return i + 1;
+                });
+              }}
+            >
+              {">"}
+            </button>
+          </div>
+          <div>
+            {imgs.map((img, index) => (
+              <img
+                key={index}
+                src={`/ppt/${img}`}
+                alt={`Image ${img}`}
+                className={"img-slide " + (index !== ind ? "hide" : "")}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     );
   };
