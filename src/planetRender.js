@@ -1,7 +1,7 @@
 import p5 from "p5";
 import { useEffect, useRef } from "react";
 
-export function PlanetRender({ planetDamage, fps }) {
+export function PlanetRender({ planetDamage }) {
   const ref = useRef();
   const animation = useRef({
     moonAnimationDuration: 30,
@@ -232,10 +232,6 @@ export function PlanetRender({ planetDamage, fps }) {
         animation.current.moonAnimationState.behind = false;
       }
     };
-
-    setInterval(() => {
-      fps(p.frameRate());
-    }, 1000);
 
     /* p.mousePressed = () => {
         p.background(0);
