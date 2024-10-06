@@ -255,14 +255,26 @@ export default function ClimateActionGame() {
   };
 
   const [dangerLevel,setDangerLevel] = useState(5);
+  const [hideSecondSection,setHideSecondSection] = useState(false);
 
-  useEffect(()=> {
+  useEffect(() => {
+    let timer;
+  
+    if (year === 2050) {
 
-    if(year === 2050){
-      setGameState("finish");
+      setHideSecondSection(true);
+      // Set a timer before changing the game state
+      timer = setTimeout(() => {
+        setGameState("finish");
+        
+      }, 2500); // Adjust the time (in milliseconds) as needed
     }
-
-  },[year])
+  
+    // Cleanup the timer if the component unmounts or if year changes
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [year]);
 
   
 
@@ -384,7 +396,7 @@ export default function ClimateActionGame() {
         </div>
 
         {/* Second Section (30% height) */}
-        <div className="second-section">
+        {hideSecondSection ? <></>:  <div className="second-section">
           {cardData.map((card) => (
             <div key={card.id} className="card responsive-card" onClick={() => openModal(card.id)}>
               <img src={card.src} alt={`Card ${card.id}`} className="card-image" />
@@ -393,7 +405,8 @@ export default function ClimateActionGame() {
           ))}
 
           
-        </div>
+        </div>}
+       
         
         {/* Compact Button */}
         
