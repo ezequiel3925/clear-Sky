@@ -279,16 +279,16 @@ export default function ClimateActionGame() {
 
     // Determine the message based on the dangerLevel
     if (dangerLevel < 4) {
-      resultMessage = "Well Done! You performed well.";
+      resultMessage = "Bien hecho. has salvado al planeta";
     } else if (dangerLevel >= 4 && dangerLevel < 7) {
-      resultMessage = "Regular performance. There's room for improvement.";
+      resultMessage = "Buen intento. Pero la situación sigue siendo crítica";
     } else if (dangerLevel >= 7) {
-      resultMessage = "Bad performance! You need to improve significantly.";
+      resultMessage = "Nuestras inversiones no han dado frutos. Has fallado en salvar al planeta";
     }
 
     return (
       <div>
-        <h2>Result</h2>
+        
         <p>{resultMessage}</p>
 
         <div className="c-end">
@@ -329,6 +329,14 @@ export default function ClimateActionGame() {
             ))}
           </div>
         </div>
+        <button className="button" onClick={() => {
+          
+          setYear(2020);
+          setDangerLevel(5);
+          setHideSecondSection(false);
+          setGameState("play");
+
+        }}> Reintentar</button>
       </div>
     );
   };
