@@ -283,12 +283,12 @@ export default function ClimateActionGame() {
     } else if (dangerLevel >= 4 && dangerLevel < 7) {
       resultMessage = "Buen intento. Pero la situación sigue siendo crítica";
     } else if (dangerLevel >= 7) {
-      resultMessage = "Nuestras inversiones no han dado frutos. Has fallado en salvar al planeta";
+      resultMessage =
+        "Nuestras inversiones no han dado frutos. Has fallado en salvar al planeta";
     }
 
     return (
       <div>
-        
         <p>{resultMessage}</p>
 
         <div className="c-end">
@@ -329,14 +329,19 @@ export default function ClimateActionGame() {
             ))}
           </div>
         </div>
-        <button className="button" onClick={() => {
-          
-          setYear(2020);
-          setDangerLevel(5);
-          setHideSecondSection(false);
-          setGameState("play");
-
-        }}> Reintentar</button>
+        <button
+          className="button"
+          onClick={() => {
+            setYear(2020);
+            setDangerLevel(5);
+            setHideSecondSection(false);
+            setGameState("play");
+            setImgs([]);
+          }}
+        >
+          {" "}
+          Reintentar
+        </button>
       </div>
     );
   };

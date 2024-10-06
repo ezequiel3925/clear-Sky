@@ -529,9 +529,10 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
-  position: relative
+  height: 400px;
+  width: 600px;
+  position: relative;
+  margin: auto;
 }
 
 .c-end .controls{
