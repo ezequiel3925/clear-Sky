@@ -1,7 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from "react";
 import "../ClimateActionGame.css";
 const AudioPlayer = () => {
   const audioRef = useRef(null);
+  const btnRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const togglePlayPause = () => {
@@ -9,8 +10,8 @@ const AudioPlayer = () => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play().catch(error => {
-          console.error('Error playing audio:', error);
+        audioRef.current.play().catch((error) => {
+          console.error("Error playing audio:", error);
         });
       }
       setIsPlaying(!isPlaying);
@@ -25,7 +26,7 @@ const AudioPlayer = () => {
           await audioRef.current.play();
           setIsPlaying(true); // Set playing state to true
         } catch (error) {
-          console.error('Error playing audio on mount:', error);
+          console.error("Error playing audio on mount:", error);
         }
       }
     };
@@ -42,10 +43,9 @@ const AudioPlayer = () => {
 
   return (
     <div>
-      
       <audio ref={audioRef} src="/spacetravel.wav" preload="auto" />
-      <button onClick={togglePlayPause}>
-        {isPlaying ? 'Pausar música' : 'Activar música'}
+      <button ref={btnRef} onClick={togglePlayPause}>
+        {isPlaying ? "Pausar música" : "Activar música"}
       </button>
     </div>
   );
