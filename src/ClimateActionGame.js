@@ -121,6 +121,8 @@ const chartOptions = {
 
 
 
+
+
 // Función para simular la obtención de datos históricos
 const fetchNASAData = async () => {
   return [
@@ -252,38 +254,102 @@ export default function ClimateActionGame() {
     setSelectedCard(null);
   };
 
+  const [dangerLevel,setDangerLevel] = useState(5);
 
+  
 
 
   // Renderizar el juego principal
 
   const renderGame = () => {
     const cardData = [
-      { id: "autos", src: "/invertirEnAutosElectricos.jpeg", text: "El futuro es eléctrico, invierte hoy en autos que están transformando el mundo hacia un mañana más limpio.", co2Impact: "+8" },
-      { id: "migracion", src: "/InvertirEnMigracion.jpeg", text: "La migración masiva es una oportunidad para la innovación y el crecimiento cultural.", co2Impact: "0" },
-      { id: "nuclear", src: "/invertirEnNuclear.jpeg", text: "La energía nuclear es la clave para un planeta sostenible y una fuente de energía limpia a largo plazo.", co2Impact: "+9" },
-      { id: "basural", src: "/invertirEnBasural.jpeg", text: "Transforma los residuos en recursos, invierte en soluciones para la gestión eficiente de basurales.", co2Impact: "+5" },
-      { id: "eolica", src: "/invertirEnEolica.jpeg", text: "El viento es la energía del futuro, invierte en energía eólica para impulsar un planeta más verde.", co2Impact: "+10" },
-      { id: "transgenica", src: "/invertirEnTransgenico.jpeg", text: "Los cultivos transgénicos son la solución para una agricultura más eficiente y sostenible.", co2Impact: "+6" },
-      { id: "agricultura", src: "/invertirEnAgricultura.jpeg", text: "Invierte en agricultura inteligente y sostenible para alimentar al mundo de manera responsable.", co2Impact: "+7" },
-      { id: "reforestar", src: "/invertirEnReforestar.jpeg", text: "Reforestar es restaurar el equilibrio natural, invierte en proyectos que dan vida al planeta.", co2Impact: "+10" },
+      { id: "autos", src: "/invertirEnAutosElectricos.jpeg", text: "El futuro es eléctrico, invierte hoy en autos que están transformando el mundo hacia un mañana más limpio.", co2Impact: -3 },
+      { id: "migracion", src: "/InvertirEnMigracion.jpeg", text: "La migración masiva es una oportunidad para la innovación y el crecimiento cultural.", co2Impact: -4 },
+      { id: "nuclear", src: "/invertirEnNuclear.jpeg", text: "La energía nuclear es la clave para un planeta sostenible y una fuente de energía limpia a largo plazo.", co2Impact: +5 },
+      { id: "basural", src: "/invertirEnBasural.jpeg", text: "Transforma los residuos en recursos, invierte en soluciones para la gestión eficiente de basurales.", co2Impact: +2 },
+      { id: "eolica", src: "/invertirEnEolica.jpeg", text: "El viento es la energía del futuro, invierte en energía eólica para impulsar un planeta más verde.", co2Impact: +2 },
+      { id: "transgenica", src: "/invertirEnTransgenico.jpeg", text: "Los cultivos transgénicos son la solución para una agricultura más eficiente y sostenible.", co2Impact: +2 },
+      { id: "agricultura", src: "/invertirEnAgricultura.jpeg", text: "Invierte en agricultura inteligente y sostenible para alimentar al mundo de manera responsable.", co2Impact: +3 },
+      { id: "reforestar", src: "/invertirEnReforestar.jpeg", text: "Reforestar es restaurar el equilibrio natural, invierte en proyectos que dan vida al planeta.", co2Impact: -3 },
     ];
+
+    const calculateDanger = (selectedCard) => {
+      const card = cardData.find(card => card.id === selectedCard);
+      
+      if (card) {
+        console.log(card.co2Impact);
+        if (card.co2Impact < 0){
+
+          if (dangerLevel - card.co2Impact > 10){
+            setDangerLevel(10);
+          }
+          else{
+            setDangerLevel(dangerLevel - card.co2Impact )
+          }
+          setYear(year + 10);
+        }
+        else if(card.co2Impact > 0){
+          
+          if (dangerLevel - card.co2Impact < 1){
+            setDangerLevel(1);
+          }
+          else{
+            setDangerLevel(dangerLevel - card.co2Impact )
+          }
+          
+          
+          setYear(year + 10);
+        }
+       
+       
+      } else {
+        console.log('Card not found');
+      }
+    }
+    
 
 
     return (
       <div className="game-layout">
         {/* First Section (70% height) */}
         <div className="first-section">
-          <PlanetRender planetDamage={0} />
+        <button onClick={() => setGameState("graphic")} className="compact-button">
+            Revisar gráfico
+          </button>
+          <h1 className="year-title">Año: {year}</h1>
+          {selectedCard && (
+            <div onClick={closeModal}>
+             <div className="modal-content" >
+  <button onClick={() => calculateDanger(selectedCard)} className="button-confirm">Confirmar Elección</button>
+  <button className="close" onClick={closeModal}>X</button>
+  <p>{selectedCard?.text}</p>
+  <p>CO2 Impact: {selectedCard?.co2Impact}</p>
+</div>
 
+            </div>
+          )}
+          <PlanetRender planetDamage={0} />
+          
 
 
           <div className="battery-container">
-            <div className="battery-label">Peligrosidad</div>
-            {[...Array(10)].map((_, index) => (
-              <div key={index} className="battery-cell"></div>
-            ))}
-          </div>
+  <div className="battery-label">Peligrosidad</div>
+  {[...Array(dangerLevel)].map((_, index) => {
+    let cellClass = "battery-cell";
+
+    // Apply the color based on the index starting from the top
+    if (index < 3) {
+      cellClass += " low-danger"; // First 3 cells - Green
+    } else if (index < 7) {
+      cellClass += " moderate-danger"; // 4th to 7th cells - Yellow
+    } else {
+      cellClass += " high-danger"; // 8th and beyond - Red
+    }
+
+    return <div key={index} className={cellClass}></div>;
+  })}
+</div>
+
         </div>
 
         {/* Second Section (30% height) */}
@@ -297,22 +363,11 @@ export default function ClimateActionGame() {
 
           
         </div>
-        {selectedCard && (
-            <div onClick={closeModal}>
-              <div className="modal-content" >
-                <button className="close" onClick={closeModal}>X</button>
-                <p>{cardData.find(card => card.id === selectedCard)?.text}</p>
-                <p>CO2 Impact: {cardData.find(card => card.id === selectedCard)?.co2Impact}</p>
-
-              </div>
-            </div>
-          )}
+        
         {/* Compact Button */}
-        <div >
-          <button onClick={() => setGameState("graphic")} className="compact-button">
-            Revisar gráfico
-          </button>
-        </div>
+        
+          
+        
       </div>
     );
   };
@@ -324,13 +379,9 @@ export default function ClimateActionGame() {
       <div className="space-y-4">
         <Card className="card">
           <CardHeader className="card-header">
-            <CardTitle className="card-title">Año: {year} {currentEvent && `- ${currentEvent}`}</CardTitle>
-            <CardDescription className="card-description">
-              Temperatura: {temperature.toFixed(2)}°C por encima de la línea base
-            </CardDescription>
-            <CardDescription className="card-description">
-              CO2: {Math.round(co2)} ppm
-            </CardDescription>
+            
+            
+            
           </CardHeader>
           <CardContent className="card-content">
             <Line
@@ -358,46 +409,11 @@ export default function ClimateActionGame() {
               options={chartOptions}
             />
           </CardContent>
-          <CardFooter className="card-footer">
-            <Button className="button" onClick={() => handleAction('renewableEnergy')}>
-              Invertir en energía renovable
-            </Button>
-            <Button className="button" onClick={() => handleAction('reforestation')}>
-              Reforestar
-            </Button>
-            <Button className="button" onClick={() => handleAction('sustainableTransport')}>
-              Promover transporte sostenible
-            </Button>
-            <Button className="button" onClick={() => handleAction('industryEfficiency')}>
-              Mejorar eficiencia industrial
-            </Button>
-          </CardFooter>
+          
         </Card>
-        <Card className="card">
-          <CardHeader className="card-header">
-            <CardTitle className="card-title">Acciones tomadas</CardTitle>
-          </CardHeader>
-          <CardContent className="card-content space-y-2">
-            <div>
-              <div className="mb-2 text-sm font-medium">Energía renovable</div>
-              <Progress value={actions.renewableEnergy} className="h-2" />
-            </div>
-            <div>
-              <div className="mb-2 text-sm font-medium">Reforestación</div>
-              <Progress value={actions.reforestation} className="h-2" />
-            </div>
-            <div>
-              <div className="mb-2 text-sm font-medium">Transporte sostenible</div>
-              <Progress value={actions.sustainableTransport} className="h-2" />
-            </div>
-            <div>
-              <div className="mb-2 text-sm font-medium">Eficiencia industrial</div>
-              <Progress value={actions.industryEfficiency} className="h-2" />
-            </div>
-          </CardContent>
-        </Card>
-        <Button className="button w-full" onClick={generatePrompt}>
-          Generar pregunta para el chatbot de IA
+        
+        <Button className="button w-full" onClick={ () => setGameState("play")}>
+          Volver al juego
         </Button>
         <Dialog open={isPromptDialogOpen} onOpenChange={setIsPromptDialogOpen}>
           <DialogContent className="dialog-content">
