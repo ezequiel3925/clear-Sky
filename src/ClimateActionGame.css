@@ -329,9 +329,13 @@ main {
   }
   
   .modal-content {
+    width: 10em;
     background: white;
     padding: 20px;
     border-radius: 5px;
+    position: absolute;
+    right: 75%;
+    top: 30%;
   }
   
   .close {

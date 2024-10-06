@@ -277,6 +277,16 @@ export default function ClimateActionGame() {
         <button onClick={() => setGameState("graphic")} className="compact-button">
             Revisar gráfico
           </button>
+          {selectedCard && (
+            <div onClick={closeModal}>
+              <div className="modal-content" >
+                <button className="close" onClick={closeModal}>X</button>
+                <p>{cardData.find(card => card.id === selectedCard)?.text}</p>
+                <p>CO2 Impact: {cardData.find(card => card.id === selectedCard)?.co2Impact}</p>
+
+              </div>
+            </div>
+          )}
           <PlanetRender planetDamage={0} />
           
 
@@ -300,16 +310,7 @@ export default function ClimateActionGame() {
 
           
         </div>
-        {selectedCard && (
-            <div onClick={closeModal}>
-              <div className="modal-content" >
-                <button className="close" onClick={closeModal}>X</button>
-                <p>{cardData.find(card => card.id === selectedCard)?.text}</p>
-                <p>CO2 Impact: {cardData.find(card => card.id === selectedCard)?.co2Impact}</p>
-
-              </div>
-            </div>
-          )}
+        
         {/* Compact Button */}
         
           
