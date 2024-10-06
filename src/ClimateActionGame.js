@@ -250,30 +250,26 @@ export default function ClimateActionGame() {
     setSelectedCard(null);
   };
 
-  const [dangerLevel,setDangerLevel] = useState(5);
-  const [hideSecondSection,setHideSecondSection] = useState(false);
+  const [dangerLevel, setDangerLevel] = useState(5);
+  const [imgs, setImgs] = useState([]);
+  const [hideSecondSection, setHideSecondSection] = useState(false);
 
   useEffect(() => {
     let timer;
-  
-    if (year === 2050) {
 
+    if (year === 2050) {
       setHideSecondSection(true);
       // Set a timer before changing the game state
       timer = setTimeout(() => {
         setGameState("finish");
-        
       }, 2500); // Adjust the time (in milliseconds) as needed
     }
-  
+
     // Cleanup the timer if the component unmounts or if year changes
     return () => {
       clearTimeout(timer);
     };
   }, [year]);
-
-  
-
 
   // Renderizar el juego principal
 
@@ -304,48 +300,56 @@ export default function ClimateActionGame() {
         src: "/invertirEnAutosElectricos.jpeg",
         text: "El futuro es eléctrico, invierte hoy en autos que están transformando el mundo hacia un mañana más limpio.",
         co2Impact: -3,
+        img: "3.png",
       },
       {
         id: "migracion",
         src: "/InvertirEnMigracion.jpeg",
         text: "La migración masiva es una oportunidad para la innovación y el crecimiento cultural.",
         co2Impact: -4,
+        img: "6.png",
       },
       {
         id: "nuclear",
         src: "/invertirEnNuclear.jpeg",
         text: "La energía nuclear es la clave para un planeta sostenible y una fuente de energía limpia a largo plazo.",
         co2Impact: +5,
+        img: "2.png",
       },
       {
         id: "basural",
         src: "/invertirEnBasural.jpeg",
         text: "Transforma los residuos en recursos, invierte en soluciones para la gestión eficiente de basurales.",
         co2Impact: +2,
+        img: "4.png",
       },
       {
         id: "eolica",
         src: "/invertirEnEolica.jpeg",
         text: "El viento es la energía del futuro, invierte en energía eólica para impulsar un planeta más verde.",
         co2Impact: +2,
+        img: "8.png",
       },
       {
         id: "transgenica",
         src: "/invertirEnTransgenico.jpeg",
         text: "Los cultivos transgénicos son la solución para una agricultura más eficiente y sostenible.",
         co2Impact: +2,
+        img: "7.png",
       },
       {
         id: "agricultura",
         src: "/invertirEnAgricultura.jpeg",
         text: "Invierte en agricultura inteligente y sostenible para alimentar al mundo de manera responsable.",
         co2Impact: +3,
+        img: "9.png",
       },
       {
         id: "reforestar",
         src: "/invertirEnReforestar.jpeg",
         text: "Reforestar es restaurar el equilibrio natural, invierte en proyectos que dan vida al planeta.",
         co2Impact: -3,
+        img: "10.png",
       },
     ];
 
@@ -353,6 +357,9 @@ export default function ClimateActionGame() {
       const card = cardData.find((card) => card.id === selectedCard);
 
       if (card) {
+        if (!imgs.includes(card.img)) {
+          imgs.push(card.img);
+        }
         console.log(card.co2Impact);
         if (card.co2Impact < 0) {
           if (dangerLevel - card.co2Impact > 10) {
@@ -431,25 +438,26 @@ export default function ClimateActionGame() {
         </div>
 
         {/* Second Section (30% height) */}
-        {hideSecondSection ? <></>:  <div className="second-section">
-          {cardData.map((card) => (
-            <div
-              key={card.id}
-              className="card responsive-card"
-              onClick={() => openModal(card.id)}
-            >
-              <img
-                src={card.src}
-                alt={`Card ${card.id}`}
-                className="card-image"
-              />
-            </div>
-          ))}
+        {hideSecondSection ? (
+          <></>
+        ) : (
+          <div className="second-section">
+            {cardData.map((card) => (
+              <div
+                key={card.id}
+                className="card responsive-card"
+                onClick={() => openModal(card.id)}
+              >
+                <img
+                  src={card.src}
+                  alt={`Card ${card.id}`}
+                  className="card-image"
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
-          
-        </div>}
-       
-        
         {/* Compact Button */}
       </div>
     );
@@ -703,15 +711,13 @@ export default function ClimateActionGame() {
 
   // Renderizado principal del componente
   return (
-    <div className="container">
+    <div className={"container " + gameState}>
       {/*<h1 className="text-3xl font-bold mb-4">ODS 13: Acción por el Clima 🌍</h1>*/}
-      <>
-        {/*<h1 className="text-3xl font-bold mb-4">ODS 13: Acción por el Clima 🌍</h1>*/}
-        <div className="flex-container-title">
-          <h1 className="heading">Clear Sky 🌍</h1>
-          <AudioPlayer />
-        </div>
-      </>
+      {/*<h1 className="text-3xl font-bold mb-4">ODS 13: Acción por el Clima 🌍</h1>*/}
+      <div className={"flex-container-title " + gameState}>
+        <h1 className="heading">Clear Sky 🌍</h1>
+        <AudioPlayer />
+      </div>
 
       {gameState === "start" && (
         <Card className="card">

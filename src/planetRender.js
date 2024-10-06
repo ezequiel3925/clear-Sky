@@ -251,5 +251,5 @@ export function PlanetRender({ planetDamage }) {
     };
   }, [planetDamage]);
 
-  return <div ref={ref}></div>;
+  return <div ref={ref} styles={"width:400px;height:400px;"}></div>;
 }

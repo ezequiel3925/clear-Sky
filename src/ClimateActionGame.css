@@ -1,15 +1,16 @@
 /* Estilos para el componente ClimateActionGame */
 main {
-    padding: 2rem;
+    
   }
   
   .container {
-    max-width: 1200px;
+    /* max-width: 1200px; */
     margin: 0 auto;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
+    padding: 1rem;
+    /* background-color: white;
+    border-radius: 8px; */
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+    /* padding: 2rem; */
   }
   
   h1 {
@@ -372,7 +373,6 @@ main {
 }
 
 .first-section {
-  flex: 0 0 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -381,11 +381,11 @@ main {
 }
 
 .second-section {
-  flex: 0 0 30%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 /* Cards Styling */
@@ -395,7 +395,7 @@ main {
   align-items: center;
   text-align: center;
   cursor: pointer;
-  padding: 10px;
+  /* padding: 10px; */
   margin-top: 30px;
   transition: transform 0.3s ease;
   width: 250px;
@@ -506,4 +506,12 @@ main {
     width: 90px;
     padding: 4px 8px;
   }
+}
+
+.flex-container-title.play{
+  display: none
+}
+
+.container.play{
+  padding: 0;
 }
