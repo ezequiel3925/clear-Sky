@@ -256,10 +256,39 @@ export default function ClimateActionGame() {
 
   const [dangerLevel,setDangerLevel] = useState(5);
 
+  useEffect(()=> {
+
+    if(year === 2050){
+      setGameState("finish");
+    }
+
+  },[year])
+
   
 
 
   // Renderizar el juego principal
+
+  const renderFinish = () => {
+    let resultMessage;
+  
+    // Determine the message based on the dangerLevel
+    if (dangerLevel < 4) {
+      resultMessage = "Well Done! You performed well.";
+    } else if (dangerLevel >= 4 && dangerLevel < 7) {
+      resultMessage = "Regular performance. There's room for improvement.";
+    } else if (dangerLevel >= 7) {
+      resultMessage = "Bad performance! You need to improve significantly.";
+    }
+  
+    return (
+      <div>
+        <h2>Result</h2>
+        <p>{resultMessage}</p>
+      </div>
+    );
+  };
+  
 
   const renderGame = () => {
     const cardData = [
@@ -696,6 +725,7 @@ export default function ClimateActionGame() {
       {gameState === "quiz" && renderQuiz()}
       {gameState === "end" && renderEnd()}
       {gameState === "graphic" && renderGraphic()}
+      {gameState === "finish" && renderFinish()}
     </div>
   );
 }
