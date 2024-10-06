@@ -263,14 +263,14 @@ export default function ClimateActionGame() {
 
   const renderGame = () => {
     const cardData = [
-      { id: "autos", src: "/invertirEnAutosElectricos.jpeg", text: "El futuro es eléctrico, invierte hoy en autos que están transformando el mundo hacia un mañana más limpio.", co2Impact: "-3" },
-      { id: "migracion", src: "/InvertirEnMigracion.jpeg", text: "La migración masiva es una oportunidad para la innovación y el crecimiento cultural.", co2Impact: "-4" },
-      { id: "nuclear", src: "/invertirEnNuclear.jpeg", text: "La energía nuclear es la clave para un planeta sostenible y una fuente de energía limpia a largo plazo.", co2Impact: "+5" },
-      { id: "basural", src: "/invertirEnBasural.jpeg", text: "Transforma los residuos en recursos, invierte en soluciones para la gestión eficiente de basurales.", co2Impact: "+2" },
-      { id: "eolica", src: "/invertirEnEolica.jpeg", text: "El viento es la energía del futuro, invierte en energía eólica para impulsar un planeta más verde.", co2Impact: "+2" },
-      { id: "transgenica", src: "/invertirEnTransgenico.jpeg", text: "Los cultivos transgénicos son la solución para una agricultura más eficiente y sostenible.", co2Impact: "+2" },
-      { id: "agricultura", src: "/invertirEnAgricultura.jpeg", text: "Invierte en agricultura inteligente y sostenible para alimentar al mundo de manera responsable.", co2Impact: "+3" },
-      { id: "reforestar", src: "/invertirEnReforestar.jpeg", text: "Reforestar es restaurar el equilibrio natural, invierte en proyectos que dan vida al planeta.", co2Impact: "-3" },
+      { id: "autos", src: "/invertirEnAutosElectricos.jpeg", text: "El futuro es eléctrico, invierte hoy en autos que están transformando el mundo hacia un mañana más limpio.", co2Impact: -3 },
+      { id: "migracion", src: "/InvertirEnMigracion.jpeg", text: "La migración masiva es una oportunidad para la innovación y el crecimiento cultural.", co2Impact: -4 },
+      { id: "nuclear", src: "/invertirEnNuclear.jpeg", text: "La energía nuclear es la clave para un planeta sostenible y una fuente de energía limpia a largo plazo.", co2Impact: +5 },
+      { id: "basural", src: "/invertirEnBasural.jpeg", text: "Transforma los residuos en recursos, invierte en soluciones para la gestión eficiente de basurales.", co2Impact: +2 },
+      { id: "eolica", src: "/invertirEnEolica.jpeg", text: "El viento es la energía del futuro, invierte en energía eólica para impulsar un planeta más verde.", co2Impact: +2 },
+      { id: "transgenica", src: "/invertirEnTransgenico.jpeg", text: "Los cultivos transgénicos son la solución para una agricultura más eficiente y sostenible.", co2Impact: +2 },
+      { id: "agricultura", src: "/invertirEnAgricultura.jpeg", text: "Invierte en agricultura inteligente y sostenible para alimentar al mundo de manera responsable.", co2Impact: +3 },
+      { id: "reforestar", src: "/invertirEnReforestar.jpeg", text: "Reforestar es restaurar el equilibrio natural, invierte en proyectos que dan vida al planeta.", co2Impact: -3 },
     ];
 
     const calculateDanger = (selectedCard) => {
@@ -279,11 +279,25 @@ export default function ClimateActionGame() {
       if (card) {
         console.log(card.co2Impact);
         if (card.co2Impact < 0){
-          setDangerLevel(dangerLevel - card.co2Impact ) // Logs the co2Impact of the found card
+
+          if (dangerLevel - card.co2Impact > 10){
+            setDangerLevel(10);
+          }
+          else{
+            setDangerLevel(dangerLevel - card.co2Impact )
+          }
           setYear(year + 10);
         }
         else if(card.co2Impact > 0){
-          setDangerLevel(dangerLevel + card.co2Impact )
+          
+          if (dangerLevel - card.co2Impact < 1){
+            setDangerLevel(1);
+          }
+          else{
+            setDangerLevel(dangerLevel - card.co2Impact )
+          }
+          
+          
           setYear(year + 10);
         }
        
